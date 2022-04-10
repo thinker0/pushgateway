@@ -25,8 +25,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/log/level"
+	"github.com/go-kit/log"
+	"github.com/go-kit/log/level"
+
+	//nolint:staticcheck // Ignore SA1019. Dependencies use the deprecated package, so we have to, too.
 	"github.com/golang/protobuf/proto"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/model"
@@ -253,7 +255,11 @@ func (dms *DiskMetricStore) loop(persistenceInterval time.Duration) {
 			for {
 				select {
 				case wr := <-dms.writeQueue:
-					dms.processWriteRequest(wr)
+					if dms.checkWriteRequest(wr) {
+						dms.processWriteRequest(wr)
+					} else {
+						dms.setPushFailedTimestamp(wr)
+					}
 				default:
 					dms.done <- dms.persist()
 					return

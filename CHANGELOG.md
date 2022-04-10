@@ -1,3 +1,13 @@
+## 1.4.2 / 2021-10-11
+
+* [BUGFIX] Do not log an error upon graceful shutdown. #428
+* [BUGFIX] Update dependencies to pull in possibly relevant bugfixes.
+
+## 1.4.1 / 2021-05-28
+
+* [BUGFIX] Persist labels properly when draining. #404
+* [BUGFIX] Use relative paths for web assets. #390
+
 ## 1.4.0 / 2021-01-23
 
 * [FEATURE] **Experimental!** Add TLS and basic authentication to HTTP endpoints. #381
